@@ -1,17 +1,16 @@
 import './App.css';
-import Counter from "./Components/Counter";
-import {useSelector} from "react-redux";
-import ToDoList from "./Components/ToDoList";
+import Home from "./Screens/Home";
+import {Route, Routes} from "react-router-dom";
+import ItemPage from "./Screens/ItemPage";
 
 function App() {
-    const {counter,list}=useSelector(state=>state)
   return (
     <div className="App">
-            <Counter/>
-        Counter in App js{counter}
-        <ToDoList/>
+        <Routes>
+            <Route path={'/'} element={<Home/>}/>
+            <Route path={'/:id'} element={<ItemPage/>}/>
+        </Routes>
 
-        {list.map(item=><div key={item.id}>{item.value}</div>)}
     </div>
   );
 }

@@ -1,20 +1,19 @@
-import {combineReducers, createStore} from "redux";
+import {applyMiddleware, combineReducers, createStore} from "redux";
 import {counterReducer} from "./Counter/reducer";
-import {listReducer} from "./List/reducer";
+import {itemReducer, listReducer} from "./List/reducer";
+import thunk from "redux-thunk";
 
 const reducers=combineReducers({
     counter:counterReducer,
     list:listReducer,
+    item:itemReducer
 })
 
-const initialState={
-    list:localStorage.getItem('list')?
-        JSON.parse(localStorage.getItem('list')):
-        [],
-}
 
 
 export const store=createStore(
     reducers,
-    initialState,
-    window.devToolsExtension && window.devToolsExtension())
+    applyMiddleware(thunk))
+
+/** We can take dispatch from the store without using useDispatch*/
+export const dispatch=store.dispatch

@@ -1,10 +1,8 @@
-import  {useState} from 'react';
-import * as Actions from "../Redux/Counter/actions";
-import {useDispatch} from "react-redux";
-import {addItemAction} from "../Redux/List/actions";
+import {useEffect, useState} from 'react';
+import {addItemAction, getItems} from "../Redux/List/actions";
+import {dispatch} from "../Redux/store";
 
 function ToDoList() {
-    const dispatch=useDispatch()
     const [value, setValue]=useState('')
 
     const handleInputChange=e=>setValue(e.target.value)
@@ -13,11 +11,15 @@ function ToDoList() {
         if (!value)
             return
         dispatch(addItemAction({
-            value,
+            title:value,
             id:Math.random()*1000
         }))
         setValue('')
     }
+
+    useEffect(()=>{
+        dispatch(getItems())
+    },[])
 
     return (
         <div style={{marginTop:40}}>
